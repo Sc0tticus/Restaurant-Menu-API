@@ -1,6 +1,6 @@
-const { gql } = require('apollo-server-express');
+import { gql } from 'apollo-server-express';
 
-const typeDefs = gql`
+export const typeDefs = gql`
 	type MenuItemVariation {
 		id: ID!
 		name: String!
@@ -41,5 +41,3 @@ const typeDefs = gql`
 		search(term: String!): [MenuItem]!
 	}
 `;
-
-module.exports = typeDefs;

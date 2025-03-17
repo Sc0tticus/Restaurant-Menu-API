@@ -1,4 +1,4 @@
-const menuData = require('../data/menuData');
+import menuData from '../data/menuData.js';
 
 const resolvers = {
 	Query: {
@@ -50,4 +50,4 @@ const resolvers = {
 	}
 };
 
-module.exports = resolvers;
+export default resolvers;

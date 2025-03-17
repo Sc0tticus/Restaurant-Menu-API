@@ -3,13 +3,12 @@
  */
 
 // Function to parse the raw menu text into structured data
-const parseMenu = rawData => {
+export const parseMenu = rawData => {
+
 	const categories = [];
 
 	let currentCategory = null;
-
 	let currentSubcategory = null;
-
 	let notes = null;
 
 	// Split by lines and filter empty lines
@@ -41,7 +40,6 @@ const parseMenu = rawData => {
 			categories.push(currentCategory);
 
 			currentSubcategory = null;
-
 			notes = null;
 
 			continue;
@@ -78,22 +76,17 @@ const parseMenu = rawData => {
 
 		// Try to parse as menu item
 		if (currentCategory) {
-
 			// Check for variant pricing like "half sandwich 7.95" or "uno 8.50"
 
 			if (line.match(/^(half|full|uno|dos|tres)/i) && line.match(/\d+\.\d+$/)) {
-
 				const parts = line.split(' ');
-
 				const price = parseFloat(parts[parts.length - 1]);
-
 				const variation = parts.slice(0, -1).join(' ');
 
 				// Add variation to the most recently added item
 				const targetArray = currentSubcategory ? currentSubcategory.items : currentCategory.items;
 
 				if (targetArray.length > 0) {
-
 					const lastItem = targetArray[targetArray.length - 1];
 
 					if (!lastItem.variations) {
@@ -139,16 +132,15 @@ const parseMenu = rawData => {
 					description = parts.slice(1).join('-').trim();
 
 				} else {
-
 					// Try to intelligently split when there's no dash
 					const words = nameAndDesc.split(' ');
 
 					if (words.length > 5) {
-
 						// Assume first 3-5 words are the name
 						name = words.slice(0, 4).join(' ');
 
 						description = words.slice(4).join(' ');
+
 					} else {
 
 						name = nameAndDesc;
@@ -180,7 +172,7 @@ const parseMenu = rawData => {
 
 			// Handle items without prices that are likely part of a variant pricing structure
 			if (!priceMatch && currentCategory.name === 'SANDWICHES' && currentSubcategory) {
-				
+
 				const item = {
 					id: `${currentCategory.id}-${currentSubcategory.name}-${currentSubcategory.items.length + 1}`,
 					name: line,
@@ -188,14 +180,11 @@ const parseMenu = rawData => {
 					price: 0, // Will be defined by variations
 					variations: []
 				};
+				
 				currentSubcategory.items.push(item);
 			}
 		}
 	}
 
 	return categories;
-};
-
-module.exports = {
-	parseMenu
 };

@@ -1,4 +1,4 @@
-const { parseMenu } = require('./menuDataUtilities');
+import { parseMenu } from './menuDataUtilities.js';
 
 // Raw menu data
 const rawMenuData = `
@@ -84,7 +84,8 @@ Grilled Salmon Artichoke tapenade, shredded kale, corn, radish, parmesan crisps 
 const parsedMenu = parseMenu(rawMenuData);
 
 // Define data access functions
-module.exports = {
+export default {
+	// Bind the methods to ensure 'this' works correctly in ES Module context
 	categories: parsedMenu,
 
 	getCategory(id) {
@@ -93,7 +94,6 @@ module.exports = {
 
 	getMenuItem(id) {
 		// Handle both numeric and string IDs
-
 		if (id.includes('-sub-')) {
 			// Subcategory item
 			const [catId, subToken, subId, itemIndex] = id.split('-');
@@ -119,7 +119,6 @@ module.exports = {
 		let allItems = [];
 
 		// Get items directly in categories
-
 		parsedMenu.forEach(category => {
 			allItems = allItems.concat(category.items);
 

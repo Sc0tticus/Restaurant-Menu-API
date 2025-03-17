@@ -1,6 +1,6 @@
-const { ApolloServer } = require('apollo-server-express');
-const typeDefs = require('../src/schema/schema');
-const resolvers = require('../src/resolvers/resolvers');
+import { ApolloServer } from 'apollo-server-express';
+import { typeDefs } from '../schema/schema.js';
+import resolvers from '../resolvers/resolvers.js';
 
 // Create a test server with our schema
 const createTestServer = () => {
