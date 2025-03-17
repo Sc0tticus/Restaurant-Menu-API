@@ -1,7 +1,7 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import { typeDefs } from './schema/schema.js';
-import { resolvers } from './resolvers/resolvers.js';
+import typeDefs from './schema/schema.js';
+import resolvers from './resolvers/resolvers.js';
 
 async function startApolloServer() {
 	const app = express();

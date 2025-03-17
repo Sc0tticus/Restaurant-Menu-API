@@ -41,3 +41,5 @@ export const typeDefs = gql`
 		search(term: String!): [MenuItem]!
 	}
 `;
+
+export default typeDefs;
