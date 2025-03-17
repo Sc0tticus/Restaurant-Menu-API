@@ -1,6 +1,6 @@
 # Restaurant Menu GraphQL API
 
-A GraphQL API built with Node.js that serves restaurant menu data. This project demonstrates how to structure and query menu data using GraphQL.
+A GraphQL API built with Node.js that serves restaurant menu data. This project demonstrates how to structure and query menu data using GraphQL. Please read the [DesignPhilosophy.md](DesignPhilosophy.md) file for more details on the design decisions and implementation strategies.
 
 ## Features
 
