@@ -41,3 +41,5 @@ const typeDefs = gql`
 		search(term: String!): [MenuItem]!
 	}
 `;
+
+module.exports = typeDefs;
