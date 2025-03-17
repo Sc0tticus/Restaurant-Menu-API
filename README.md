@@ -48,6 +48,53 @@ Run the test suite with:
 npm test
 ```
 
+### Data Model
+
+This API parses raw text menu data into a sophisticated hierarchical structure. The parser (parsedData()) transforms unstructured restaurant menu text into a normalized data model that preserves relationships between categories, subcategories, items, and their variations.
+
+Below is a sample of the parsedMenu data structure:
+
+```
+[
+  {
+    id: 3,
+    name: "SANDWICHES",
+    description: "",
+    subcategories: [
+      {
+        id: "3-sub-1",
+        name: "COLD",
+        description: "",
+        items: [
+          {
+            id: "3-COLD-1",
+            name: "Turkey & Avocado",
+            description: "with tomato",
+            price: 0, // Base price is 0 because it's defined by variations
+            variations: [
+              {
+                id: "3-COLD-1-var-1",
+                name: "half sandwich",
+                price: 7.95
+              },
+              {
+                id: "3-COLD-1-var-2",
+                name: "full sandwich",
+                price: 9.25
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    items: [],
+    notes: [
+      "Served with choice of house pasta salad, green salad, or fresh fruit. For an additional $1.50, you can \"upgrade\" (by substituting) to ½ pasta salad of the day, French onion soup or soup of the day."
+    ]
+  }
+]
+```
+
 ## Example Queries
 
 ### Get all categories:
