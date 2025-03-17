@@ -22,10 +22,12 @@ const parseMenu = rawData => {
 	const menuLines = lines.filter(line => !line.includes('Web Restaurant'));
 
 	for (let i = 0; i < menuLines.length; i++) {
+
 		const line = menuLines[i];
 
 		// Check if this is a category header
 		if (line.startsWith('-') && line.endsWith('-')) {
+
 			const categoryName = line.replace(/-/g, '').trim();
 
 			currentCategory = {
@@ -47,6 +49,7 @@ const parseMenu = rawData => {
 
 		// Check if this is a subcategory (e.g., COLD, HOT)
 		if ((currentCategory && line === 'COLD') || line === 'HOT') {
+
 			currentSubcategory = {
 				id: `${currentCategory.id}-sub-${currentCategory.subcategories.length + 1}`,
 				name: line,
@@ -75,17 +78,22 @@ const parseMenu = rawData => {
 
 		// Try to parse as menu item
 		if (currentCategory) {
+
 			// Check for variant pricing like "half sandwich 7.95" or "uno 8.50"
 
 			if (line.match(/^(half|full|uno|dos|tres)/i) && line.match(/\d+\.\d+$/)) {
+
 				const parts = line.split(' ');
+
 				const price = parseFloat(parts[parts.length - 1]);
+
 				const variation = parts.slice(0, -1).join(' ');
 
 				// Add variation to the most recently added item
 				const targetArray = currentSubcategory ? currentSubcategory.items : currentCategory.items;
 
 				if (targetArray.length > 0) {
+
 					const lastItem = targetArray[targetArray.length - 1];
 
 					if (!lastItem.variations) {
@@ -106,6 +114,7 @@ const parseMenu = rawData => {
 			const priceMatch = line.match(/\d+\.\d+$/);
 
 			if (priceMatch) {
+
 				const price = parseFloat(priceMatch[0]);
 
 				const nameAndDesc = line.substring(0, line.lastIndexOf(priceMatch[0])).trim();
@@ -114,27 +123,34 @@ const parseMenu = rawData => {
 				let name, description;
 
 				if (nameAndDesc.includes('–')) {
+
 					const parts = nameAndDesc.split('–');
 
 					name = parts[0].trim();
 
 					description = parts.slice(1).join('–').trim();
+
 				} else if (nameAndDesc.includes('-')) {
+
 					const parts = nameAndDesc.split('-');
 
 					name = parts[0].trim();
 
 					description = parts.slice(1).join('-').trim();
+
 				} else {
+
 					// Try to intelligently split when there's no dash
 					const words = nameAndDesc.split(' ');
 
 					if (words.length > 5) {
+
 						// Assume first 3-5 words are the name
 						name = words.slice(0, 4).join(' ');
 
 						description = words.slice(4).join(' ');
 					} else {
+
 						name = nameAndDesc;
 
 						description = '';
@@ -164,6 +180,7 @@ const parseMenu = rawData => {
 
 			// Handle items without prices that are likely part of a variant pricing structure
 			if (!priceMatch && currentCategory.name === 'SANDWICHES' && currentSubcategory) {
+				
 				const item = {
 					id: `${currentCategory.id}-${currentSubcategory.name}-${currentSubcategory.items.length + 1}`,
 					name: line,
